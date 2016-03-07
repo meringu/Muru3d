@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace muru3d
 {
@@ -47,8 +48,8 @@ namespace muru3d
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            var keyBoardState = Keyboard.GetState();
-            foreach (var pressedKey in keyBoardState.GetPressedKeys())
+            var keyboardState = Keyboard.GetState();
+            foreach (var pressedKey in keyboardState.GetPressedKeys())
             {
                 switch (pressedKey)
                 {
@@ -64,9 +65,22 @@ namespace muru3d
                     case Keys.Right:
                         _camera.Rotation += VIEW_ROTATION_SPEED;
                         break;
+                    case Keys.Add:
+                    case Keys.OemPlus:
+                        _camera.Zoom *= 1 - 0.1f;
+                        System.Console.WriteLine(_camera.Zoom);
+                        break;
+                    case Keys.Subtract:
+                    case Keys.OemMinus:
+                        _camera.Zoom *= 1 + 0.1f;
+                        break;
                 }
-                _camera.Sanitize();
             }
+
+            //var keys = string.Join(", ", keyboardState.GetPressedKeys().Select(x => x.ToString()));
+            //System.Console.WriteLine(keys);
+
+            _camera.Sanitize();
 
             base.Update(gameTime);
         }
