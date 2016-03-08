@@ -6,28 +6,63 @@ namespace muru3d
 {
     class Model
     {
-        protected HashSet<Polygon> _polygons;
+        private HashSet<Edge> _edges;
+        private HashSet<Polygon> _polygons;
+        private HashSet<Vertex> _vertices;
 
         public Model()
         {
-            var topLeftFront  = new Vector3(-0.5f,  0.5f, -0.5f);
-            var topLeftBack   = new Vector3(-0.5f,  0.5f,  0.5f);
-            var topRightFront = new Vector3( 0.5f,  0.5f, -0.5f);
-            var topRightBack  = new Vector3( 0.5f,  0.5f,  0.5f);
-            var btmLeftFront  = new Vector3(-0.5f, -0.5f, -0.5f);
-            var btmLeftBack   = new Vector3(-0.5f, -0.5f,  0.5f);
-            var btmRightFront = new Vector3( 0.5f, -0.5f, -0.5f);
-            var btmRightBack  = new Vector3( 0.5f, -0.5f,  0.5f);
+            var topLeftFront = new Vertex(new Vector3(-0.5f, 0.5f, -0.5f));
+            var topLeftBack = new Vertex(new Vector3(-0.5f, 0.5f, 0.5f));
+            var topRightFront = new Vertex(new Vector3(0.5f, 0.5f, -0.5f));
+            var topRightBack = new Vertex(new Vector3(0.5f, 0.5f, 0.5f));
+            var btmLeftFront = new Vertex(new Vector3(-0.5f, -0.5f, -0.5f));
+            var btmLeftBack = new Vertex(new Vector3(-0.5f, -0.5f, 0.5f));
+            var btmRightFront = new Vertex(new Vector3(0.5f, -0.5f, -0.5f));
+            var btmRightBack = new Vertex(new Vector3(0.5f, -0.5f, 0.5f));
 
-            _polygons = new HashSet<Polygon>
+            _edges = new HashSet<Edge>();
+            _polygons = new HashSet<Polygon>();
+            _vertices = new HashSet<Vertex>
             {
-                new Polygon { Vertices = new List<Vector3> { topLeftFront,  topRightFront, topRightBack,  topLeftBack   } },
-                new Polygon { Vertices = new List<Vector3> { btmLeftFront,  btmLeftBack,   btmRightBack,  btmRightFront } },
-                new Polygon { Vertices = new List<Vector3> { topLeftFront,  btmLeftFront,  btmRightFront, topRightFront } },
-                new Polygon { Vertices = new List<Vector3> { topLeftBack,   topRightBack,  btmRightBack,  btmLeftBack   } },
-                new Polygon { Vertices = new List<Vector3> { topLeftFront,  topLeftBack,   btmLeftBack,   btmLeftFront  } },
-                new Polygon { Vertices = new List<Vector3> { topRightFront, btmRightFront, btmRightBack,  topRightBack  } }
+                topLeftFront,
+                topLeftBack,
+                topRightFront,
+                topRightBack,
+                btmLeftFront,
+                btmLeftBack,
+                btmRightFront,
+                btmRightBack
             };
+
+            CreateFace(new List<Vertex> { topLeftFront, topRightFront, topRightBack, topLeftBack });
+            CreateFace(new List<Vertex> { btmLeftFront, btmLeftBack, btmRightBack, btmRightFront });
+            CreateFace(new List<Vertex> { topLeftFront, btmLeftFront, btmRightFront, topRightFront });
+            CreateFace(new List<Vertex> { topLeftBack, topRightBack, btmRightBack, btmLeftBack });
+            CreateFace(new List<Vertex> { topLeftFront, topLeftBack, btmLeftBack, btmLeftFront });
+            CreateFace(new List<Vertex> { topRightFront, btmRightFront, btmRightBack, topRightBack });
+        }
+
+        public Polygon CreateFace(List<Vertex> vertices)
+        {
+            var polygon = new Polygon { Vertices = vertices };
+            _polygons.Add(polygon);
+
+            var edges = new List<Edge>();
+
+            for (var i = 0; i < vertices.Count; i++)
+            {
+                var v1 = vertices[i];
+                var v2 = vertices[(i + 1) % vertices.Count];
+
+                var edge = v1.FindOrCreateEdge(v2);
+
+                edge.Faces.Add(polygon);
+            }
+
+            polygon.Edges = edges;
+
+            return polygon;
         }
 
         public void Draw(GraphicsDevice graphicsDevice, BasicEffect basicEffect)

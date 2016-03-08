@@ -88,14 +88,12 @@ namespace muru3d
         {
             _graphicsDeviceManager.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-
             var graphicsDevice = _graphicsDeviceManager.GraphicsDevice;
 
-            // These three lines are required if you use SpriteBatch, to reset the states that it sets
             graphicsDevice.BlendState = BlendState.Opaque;
             graphicsDevice.DepthStencilState = DepthStencilState.Default;
             graphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
-            // graphicsDevice.RasterizerState = RasterizerState.CullNone;
+            graphicsDevice.RasterizerState = RasterizerState.CullNone;
 
             _basicEffect.World = Matrix.Identity;
 
