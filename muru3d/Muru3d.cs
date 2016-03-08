@@ -68,7 +68,6 @@ namespace muru3d
                     case Keys.Add:
                     case Keys.OemPlus:
                         _camera.Zoom *= 1 - 0.1f;
-                        System.Console.WriteLine(_camera.Zoom);
                         break;
                     case Keys.Subtract:
                     case Keys.OemMinus:

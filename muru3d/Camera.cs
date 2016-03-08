@@ -23,7 +23,7 @@ namespace muru3d
 
         public Matrix ProjectionMatrix(float aspectRatio)
         {
-            return Matrix.CreatePerspectiveFieldOfView(MathHelper.Pi / 2f, aspectRatio, 0.1f, 1000f);
+            return Matrix.CreatePerspectiveFieldOfView(MathHelper.Pi / 2f, aspectRatio, Zoom / 10f, Zoom * 1000f);
         }
         public void Sanitize()
         {
