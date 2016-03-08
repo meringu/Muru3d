@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Linq;
 
 namespace muru3d
 {
@@ -9,8 +8,6 @@ namespace muru3d
     {
         const float VIEW_ROTATION_SPEED = 0.1f;
 
-
-        private BasicEffect _basicEffect;
         private Camera _camera;
         private GraphicsDeviceManager _graphicsDeviceManager;
         private Grid _grid;
@@ -19,7 +16,8 @@ namespace muru3d
 
         public Muru3d()
         {
-            _graphicsDeviceManager = new GraphicsDeviceManager(this);   
+            _graphicsDeviceManager = new GraphicsDeviceManager(this);
+            _graphicsDeviceManager.PreferMultiSampling = true;
             Content.RootDirectory = "Content";
             Window.AllowUserResizing = true;
         }
@@ -32,9 +30,8 @@ namespace muru3d
         protected override void LoadContent()
         {
             _camera = new Camera();
-            _basicEffect = new BasicEffect(_graphicsDeviceManager.GraphicsDevice);
             _grid = new Grid(_camera);
-            _model = new Model();
+            _model = new Model(_graphicsDeviceManager.GraphicsDevice);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
@@ -95,15 +92,7 @@ namespace muru3d
             graphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
             graphicsDevice.RasterizerState = RasterizerState.CullNone;
 
-            _basicEffect.World = Matrix.Identity;
-
-            _basicEffect.View = _camera.ViewMatrix();
-            _basicEffect.Projection = _camera.ProjectionMatrix(graphicsDevice.Viewport.AspectRatio);
-
-            _basicEffect.DiffuseColor = Color.White.ToVector3();
-            _basicEffect.EnableDefaultLighting();
-
-            _model.Draw(_graphicsDeviceManager.GraphicsDevice, _basicEffect);
+            _model.Draw(_camera);
 
             _grid.Draw(_graphicsDeviceManager.GraphicsDevice);
 

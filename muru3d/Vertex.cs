@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
 namespace muru3d
@@ -12,6 +13,11 @@ namespace muru3d
         {
             Edges = new List<Edge>();
             Position = position;
+        }
+
+        public void Draw(GraphicsDevice graphicsDevice, BasicEffect basicEffect)
+        {
+
         }
 
         public Edge FindOrCreateEdge(Vertex other)

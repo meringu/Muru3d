@@ -10,8 +10,23 @@ namespace muru3d
         private HashSet<Polygon> _polygons;
         private HashSet<Vertex> _vertices;
 
-        public Model()
+        private GraphicsDevice _graphicsDevice;
+
+        private BasicEffect _edgeBasicEffect;
+        private BasicEffect _faceBasicEffect;
+        private BasicEffect _vertexBasicEffect;
+
+        public Model(GraphicsDevice graphicsDevice)
         {
+            _graphicsDevice = graphicsDevice;
+
+            _edgeBasicEffect = new BasicEffect(graphicsDevice);
+            _faceBasicEffect = new BasicEffect(graphicsDevice);
+            _faceBasicEffect.DiffuseColor = Color.White.ToVector3();
+            _faceBasicEffect.EnableDefaultLighting();
+
+            _vertexBasicEffect = new BasicEffect(graphicsDevice);
+
             var topLeftFront = new Vertex(new Vector3(-0.5f, 0.5f, -0.5f));
             var topLeftBack = new Vertex(new Vector3(-0.5f, 0.5f, 0.5f));
             var topRightFront = new Vertex(new Vector3(0.5f, 0.5f, -0.5f));
@@ -57,6 +72,8 @@ namespace muru3d
 
                 var edge = v1.FindOrCreateEdge(v2);
 
+                _edges.Add(edge);
+
                 edge.Faces.Add(polygon);
             }
 
@@ -65,11 +82,25 @@ namespace muru3d
             return polygon;
         }
 
-        public void Draw(GraphicsDevice graphicsDevice, BasicEffect basicEffect)
+        public void Draw(Camera camera)
         {
+            foreach (var basicEffect in new BasicEffect[] { _edgeBasicEffect, _faceBasicEffect, _vertexBasicEffect })
+            {
+                basicEffect.World = Matrix.Identity;
+                basicEffect.View = camera.ViewMatrix();
+                basicEffect.Projection = camera.ProjectionMatrix(_graphicsDevice.Viewport.AspectRatio);
+            }
+            foreach (var edge in _edges)
+            {
+                edge.Draw(_graphicsDevice, _edgeBasicEffect);
+            }
             foreach (var polygon in _polygons)
             {
-                polygon.Draw(graphicsDevice, basicEffect);
+                polygon.Draw(_graphicsDevice, _faceBasicEffect);
+            }
+            foreach (var vertex in _vertices)
+            {
+                vertex.Draw(_graphicsDevice, _vertexBasicEffect);
             }
         }
     }
