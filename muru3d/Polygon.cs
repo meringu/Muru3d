@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace muru3d
+namespace Muru3D
 {
     class Polygon
     {
@@ -26,7 +26,7 @@ namespace muru3d
         }
 
         public void Draw(GraphicsDevice graphicsDevice, BasicEffect basicEffect)
-        {          
+        {
             foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();

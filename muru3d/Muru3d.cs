@@ -2,9 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace muru3d
+namespace Muru3D
 {
-    public class Muru3d : Game
+    public class Muru3D : Game
     {
         const float VIEW_ROTATION_SPEED = 0.1f;
 
@@ -14,7 +14,7 @@ namespace muru3d
         private Model _model;
         private SpriteBatch _spriteBatch;
 
-        public Muru3d()
+        public Muru3D()
         {
             _graphicsDeviceManager = new GraphicsDeviceManager(this);
             _graphicsDeviceManager.PreferMultiSampling = true;

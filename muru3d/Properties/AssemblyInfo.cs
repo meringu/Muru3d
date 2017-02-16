@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("muru3d")]
-[assembly: AssemblyProduct("muru3d")]
+[assembly: AssemblyTitle("Muru3D")]
+[assembly: AssemblyProduct("Muru3D")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("764cdf36-f46a-4499-93d4-d8c572c3d877")]
+[assembly: Guid("5cb843c0-3619-4139-9d0c-602b0455d26a")]
 
 // Version information for an assembly consists of the following four values:
 //

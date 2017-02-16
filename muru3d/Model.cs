@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace muru3d
+namespace Muru3D
 {
     class Model
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace muru3d
+namespace Muru3D
 {
-    public class Camera
+    class Camera
     {
         public float Tilt { get; set; }
         public float Rotation { get; set; }

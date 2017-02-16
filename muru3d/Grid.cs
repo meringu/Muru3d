@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace muru3d
+namespace Muru3D
 {
     class Grid
     {
@@ -20,7 +20,7 @@ namespace muru3d
 
             foreach (float x in Enumerable.Range(-10, 21))
             {
-                vertices.Add(new VertexPosition(new Vector3(x , 0, -10f)));
+                vertices.Add(new VertexPosition(new Vector3(x, 0, -10f)));
                 vertices.Add(new VertexPosition(new Vector3(x, 0, 10f)));
             }
 
@@ -46,7 +46,7 @@ namespace muru3d
             foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                
+
                 graphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, _vertices, 0, _vertices.Length / 2, VertexPosition.VertexDeclaration);
             }
         }
